@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Recipe</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="container">
+  <h2>Edit Recipe</h2>
+
+  <form action="/edit/<%= recipe.id %>" method="POST" enctype="multipart/form-data">
+
+    <label>Title</label>
+    <input type="text" name="title" value="<%= recipe.title %>" required>
+
+    <label>Ingredients</label>
+    <textarea name="ingredients" required><%= recipe.ingredients %></textarea>
+
+    <label>Instructions</label>
+    <textarea name="instructions" required><%= recipe.instructions %></textarea>
+
+    <label>Cuisine</label>
+<select name="cuisine">
+  <option <%= recipe.cuisine === "American" ? "selected" : "" %>>American</option>
+  <option <%= recipe.cuisine === "Mexican" ? "selected" : "" %>>Mexican</option>
+  <option <%= recipe.cuisine === "Italian" ? "selected" : "" %>>Italian</option>
+  <option <%= recipe.cuisine === "Asian" ? "selected" : "" %>>Asian</option>
+  <option <%= recipe.cuisine === "Mediterranean" ? "selected" : "" %>>Mediterranean</option>
+</select>
+
+    <label>Meal Type</label>
+<select name="mealType">
+  <option <%= recipe.mealType === "Breakfast" ? "selected" : "" %>>Breakfast</option>
+  <option <%= recipe.mealType === "Lunch" ? "selected" : "" %>>Lunch</option>
+  <option <%= recipe.mealType === "Dinner" ? "selected" : "" %>>Dinner</option>
+  <option <%= recipe.mealType === "Dessert" ? "selected" : "" %>>Dessert</option>
+  <option <%= recipe.mealType === "Snack" ? "selected" : "" %>>Snack</option>
+</select>
+
+    <label>Cooking Time</label>
+    <input type="number" name="cookTime" value="<%= recipe.cookTime %>">
+
+    <label>Difficulty</label>
+<select name="difficulty">
+  <option <%= recipe.difficulty === "Easy" ? "selected" : "" %>>Easy</option>
+  <option <%= recipe.difficulty === "Medium" ? "selected" : "" %>>Medium</option>
+  <option <%= recipe.difficulty === "Hard" ? "selected" : "" %>>Hard</option>
+</select>
+
+    <label>Dietary Tags</label>
+
+<div class="checkbox-group">
+  <label>
+    <input type="checkbox" name="tags" value="vegan"
+      <%= recipe.tags.includes("vegan") ? "checked" : "" %>>
+    Vegan
+  </label>
+
+  <label>
+    <input type="checkbox" name="tags" value="vegetarian"
+      <%= recipe.tags.includes("vegetarian") ? "checked" : "" %>>
+    Vegetarian
+  </label>
+
+  <label>
+    <input type="checkbox" name="tags" value="gluten-free"
+      <%= recipe.tags.includes("gluten-free") ? "checked" : "" %>>
+    Gluten-Free
+  </label>
+
+  <label>
+    <input type="checkbox" name="tags" value="keto"
+      <%= recipe.tags.includes("keto") ? "checked" : "" %>>
+    Keto
+  </label>
+
+  <label>
+    <input type="checkbox" name="tags" value="paleo"
+      <%= recipe.tags.includes("paleo") ? "checked" : "" %>>
+    Paleo
+  </label>
+</div>
+
+    <button class="btn">Save Changes</button>
+  </form>
+</div>
+
+</body>
+</html>

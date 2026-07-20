@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FlavorForge | Recipes</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<header>
+  <h1>FlavorForge</h1>
+  <p>Create. Cook. Share.</p>
+</header>
+
+<div class="container">
+  <a class="btn" href="/submit">Submit a New Recipe</a>
+
+  <h2>All Recipes</h2>
+
+  <% if (recipes.length === 0) { %>
+    <p>No recipes yet. Add one!</p>
+  <% } %>
+
+  <% recipes.forEach(recipe => { %>
+    <section class="recipe-card">
+  <h3><%= recipe.title %></h3>
+
+  <p><strong>Cuisine:</strong> <%= recipe.cuisine %></p>
+  <p><strong>Meal Type:</strong> <%= recipe.mealType %></p>
+  <p><strong>Difficulty:</strong> <%= recipe.difficulty %></p>
+  <p><strong>Cooking Time:</strong> <%= recipe.cookTime %> minutes</p>
+  <p><strong>Tags:</strong> <%= recipe.tags %></p>
+
+  <h4>Ingredients</h4>
+  <p><%= recipe.ingredients %></p>
+
+  <h4>Instructions</h4>
+  <p><%= recipe.instructions %></p>
+
+  <% if (recipe.photo) { %>
+    <img src="/uploads/<%= recipe.photo %>" class="recipe-photo">
+  <% } %>
+
+  <form action="/edit/<%= recipe.id %>" method="GET">
+    <button class="edit-btn">Edit</button>
+  </form>
+
+  <form action="/delete/<%= recipe.id %>" method="POST">
+    <button class="delete-btn">Delete</button>
+  </form>
+</section>
+
+  <% }) %>
+</div>
+
+</body>
+</html>

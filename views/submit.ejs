@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit Recipe | FlavorForge</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<header>
+  <h1>Submit a Recipe</h1>
+</header>
+
+<div class="container">
+  <form action="/submit" method="POST" enctype="multipart/form-data">
+
+    <label>Recipe Title</label>
+    <input type="text" name="title" required>
+
+    <label>Ingredients</label>
+    <textarea name="ingredients" required></textarea>
+
+    <label>Instructions</label>
+    <textarea name="instructions" required></textarea>
+
+    <label>Dietary Tags</label>
+
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="tags" value="vegan"> Vegan</label>
+      <label><input type="checkbox" name="tags" value="vegetarian"> Vegetarian</label>
+      <label><input type="checkbox" name="tags" value="gluten-free"> Gluten-Free</label>
+      <label><input type="checkbox" name="tags" value="keto"> Keto</label>
+      <label><input type="checkbox" name="tags" value="paleo"> Paleo</label>
+    </div>
+
+    <label>Cuisine</label>
+    <select name="cuisine">
+      <option>American</option>
+      <option>Mexican</option>
+      <option>Italian</option>
+      <option>Asian</option>
+      <option>Mediterranean</option>
+    </select>
+
+    <label>Meal Type</label>
+    <select name="mealType">
+      <option>Breakfast</option>
+      <option>Lunch</option>
+      <option>Dinner</option>
+      <option>Dessert</option>
+      <option>Snack</option>
+    </select>
+
+    <label>Cooking Time (minutes)</label>
+    <input type="number" name="cookTime">
+
+    <label>Difficulty</label>
+    <select name="difficulty">
+      <option>Easy</option>
+      <option>Medium</option>
+      <option>Hard</option>
+    </select>
+
+    <label>Upload Photo</label>
+    <input type="file" name="photo">
+
+    <button type="submit">Submit Recipe</button>
+  </form>
+</div>
+
+</body>
+</html>

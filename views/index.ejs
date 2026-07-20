@@ -10,6 +10,17 @@
 <header>
   <h1>FlavorForge</h1>
   <p>Create. Cook. Share.</p>
+  <nav class="nav-bar">
+    <% if (user) { %>
+      <span>Hi, <%= user.username %></span>
+      <form action="/logout" method="POST" class="inline-form">
+        <button type="submit" class="link-btn">Log out</button>
+      </form>
+    <% } else { %>
+      <a href="/login">Log in</a>
+      <a href="/signup">Sign up</a>
+    <% } %>
+  </nav>
 </header>
 
 <div class="container">
@@ -23,7 +34,15 @@
 
   <% recipes.forEach(recipe => { %>
     <section class="recipe-card">
-  <h3><%= recipe.title %></h3>
+  <h3><a href="/recipe/<%= recipe.id %>"><%= recipe.title %></a></h3>
+
+  <p class="rating-summary">
+    <% if (recipe.stats.count === 0) { %>
+      No ratings yet
+    <% } else { %>
+      ★ <%= recipe.stats.average %> · <%= recipe.stats.count %> review<%= recipe.stats.count === 1 ? "" : "s" %>
+    <% } %>
+  </p>
 
   <p><strong>Cuisine:</strong> <%= recipe.cuisine %></p>
   <p><strong>Meal Type:</strong> <%= recipe.mealType %></p>
@@ -40,6 +59,8 @@
   <% if (recipe.photo) { %>
     <img src="/uploads/<%= recipe.photo %>" class="recipe-photo">
   <% } %>
+
+  <a class="btn" href="/recipe/<%= recipe.id %>">View / Rate / Comment</a>
 
   <form action="/edit/<%= recipe.id %>" method="GET">
     <button class="edit-btn">Edit</button>

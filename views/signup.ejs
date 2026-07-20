@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up | FlavorForge</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/auth.css">
+</head>
+<body class="auth-page">
+
+  <main class="auth-shell">
+    <p class="auth-brand"><a href="/">FlavorForge</a></p>
+    <h1>Sign up</h1>
+    <p class="auth-sub">Create an account to rate and comment.</p>
+
+    <% if (error) { %>
+      <p class="auth-error"><%= error %></p>
+    <% } %>
+
+    <form action="/signup" method="POST" class="auth-form">
+      <label for="username">Username</label>
+      <input id="username" type="text" name="username" required autocomplete="username">
+
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email" required autocomplete="email">
+
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" required autocomplete="new-password" minlength="6">
+
+      <button type="submit">Create account</button>
+    </form>
+
+    <p class="auth-switch">Already have an account? <a href="/login">Log in</a></p>
+  </main>
+
+</body>
+</html>

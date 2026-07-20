@@ -64,3 +64,105 @@ button:hover {
   border-radius: 5px;
   text-decoration: none;
 }
+
+.nav-bar {
+  margin-top: 10px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-bar a {
+  color: white;
+  text-decoration: underline;
+}
+
+.inline-form {
+  display: inline;
+  margin: 0;
+}
+
+.link-btn {
+  margin: 0;
+  padding: 0;
+  background: none;
+  color: white;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+}
+
+.recipe-card h3 a {
+  color: #306D29;
+  text-decoration: none;
+}
+
+.recipe-card h3 a:hover {
+  text-decoration: underline;
+}
+
+.rating-summary {
+  color: #555;
+  margin: 8px 0 16px;
+}
+
+.star-display .star {
+  color: #ccc;
+  font-size: 1.25rem;
+}
+
+.star-display .star.filled {
+  color: #c9a227;
+}
+
+.rating-section,
+.comments-section {
+  margin-top: 20px;
+}
+
+.rate-form select {
+  max-width: 200px;
+}
+
+.comment-form textarea,
+.reply-box textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+}
+
+.comment {
+  border-top: 1px solid #e5e5e5;
+  padding: 12px 0;
+}
+
+.comment-meta {
+  margin: 0 0 4px;
+  font-size: 0.9rem;
+}
+
+.comment-body {
+  margin: 0 0 8px;
+}
+
+.reply-box {
+  margin-top: 6px;
+}
+
+.reply-box summary {
+  cursor: pointer;
+  color: #306D29;
+  font-size: 0.9rem;
+}
+
+.muted {
+  color: #777;
+}

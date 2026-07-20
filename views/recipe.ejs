@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= recipe.title %> | FlavorForge</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<header>
+  <h1>FlavorForge</h1>
+  <p>Create. Cook. Share.</p>
+  <nav class="nav-bar">
+    <a href="/">All Recipes</a>
+    <% if (user) { %>
+      <span>Hi, <%= user.username %></span>
+      <form action="/logout" method="POST" class="inline-form">
+        <button type="submit" class="link-btn">Log out</button>
+      </form>
+    <% } else { %>
+      <a href="/login">Log in</a>
+      <a href="/signup">Sign up</a>
+    <% } %>
+  </nav>
+</header>
+
+<div class="container">
+  <a class="btn" href="/">&larr; Back</a>
+
+  <section class="recipe-card">
+    <h2><%= recipe.title %></h2>
+
+    <div class="rating-summary">
+      <% if (stats.count === 0) { %>
+        <p><strong>No ratings yet</strong></p>
+      <% } else { %>
+        <p>
+          <strong><%= stats.average %></strong> / 5 stars
+          · <%= stats.count %> review<%= stats.count === 1 ? "" : "s" %>
+        </p>
+        <p class="star-display" aria-label="Average rating <%= stats.average %> out of 5">
+          <% for (let i = 1; i <= 5; i++) { %>
+            <span class="<%= i <= Math.round(stats.average) ? "star filled" : "star" %>">★</span>
+          <% } %>
+        </p>
+      <% } %>
+    </div>
+
+    <p><strong>Cuisine:</strong> <%= recipe.cuisine %></p>
+    <p><strong>Meal Type:</strong> <%= recipe.mealType %></p>
+    <p><strong>Difficulty:</strong> <%= recipe.difficulty %></p>
+    <p><strong>Cooking Time:</strong> <%= recipe.cookTime %> minutes</p>
+    <p><strong>Tags:</strong> <%= recipe.tags %></p>
+
+    <h3>Ingredients</h3>
+    <p><%= recipe.ingredients %></p>
+
+    <h3>Instructions</h3>
+    <p><%= recipe.instructions %></p>
+
+    <% if (recipe.photo) { %>
+      <img src="/uploads/<%= recipe.photo %>" class="recipe-photo" alt="<%= recipe.title %>">
+    <% } %>
+
+    <form action="/edit/<%= recipe.id %>" method="GET">
+      <button class="edit-btn">Edit</button>
+    </form>
+  </section>
+
+  <section class="recipe-card rating-section">
+    <h3>Rate this recipe</h3>
+    <% if (user) { %>
+      <form action="/recipe/<%= recipe.id %>/rate" method="POST" class="rate-form">
+        <label for="stars">Your rating (1–5)</label>
+        <select id="stars" name="stars" required>
+          <% for (let i = 5; i >= 1; i--) { %>
+            <option value="<%= i %>" <%= userRating && userRating.stars === i ? "selected" : "" %>>
+              <%= i %> star<%= i === 1 ? "" : "s" %>
+            </option>
+          <% } %>
+        </select>
+        <button type="submit"><%= userRating ? "Update rating" : "Submit rating" %></button>
+      </form>
+    <% } else { %>
+      <p><a href="/login">Log in</a> to leave a rating.</p>
+    <% } %>
+  </section>
+
+  <section class="recipe-card comments-section">
+    <h3>Comments</h3>
+
+    <% if (user) { %>
+      <form action="/recipe/<%= recipe.id %>/comment" method="POST" class="comment-form">
+        <label for="body">Leave a comment or ask a question</label>
+        <textarea id="body" name="body" rows="3" required></textarea>
+        <button type="submit">Post comment</button>
+      </form>
+    <% } else { %>
+      <p><a href="/login">Log in</a> to comment.</p>
+    <% } %>
+
+    <% if (comments.length === 0) { %>
+      <p class="muted">No comments yet. Be the first!</p>
+    <% } %>
+
+    <ul class="comment-list">
+      <% comments.forEach(function (comment) { %>
+        <li class="comment" style="margin-left: <%= comment.depth * 24 %>px">
+          <p class="comment-meta"><strong><%= comment.username %></strong></p>
+          <p class="comment-body"><%= comment.body %></p>
+
+          <% if (user) { %>
+            <details class="reply-box">
+              <summary>Reply</summary>
+              <form action="/recipe/<%= recipe.id %>/comment" method="POST">
+                <input type="hidden" name="parentId" value="<%= comment.id %>">
+                <textarea name="body" rows="2" required placeholder="Write a reply..."></textarea>
+                <button type="submit">Reply</button>
+              </form>
+            </details>
+          <% } %>
+        </li>
+      <% }); %>
+    </ul>
+  </section>
+</div>
+
+</body>
+</html>

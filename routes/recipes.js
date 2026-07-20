@@ -27,11 +27,14 @@ router.get("/", (req, res) => {
 
 // FORM PAGE — submit a recipe
 router.get("/submit", (req, res) => {
+  if (!req.session.user) return res.redirect("/login");
   res.render("submit", { user: req.session.user || null });
 });
 
 // HANDLE FORM SUBMISSION
 router.post("/submit", upload.single("photo"), (req, res) => {
+  if (!req.session.user) return res.redirect("/login");
+
   const recipe = {
     id: Date.now(), // unique ID
     title: req.body.title,
@@ -42,7 +45,9 @@ router.post("/submit", upload.single("photo"), (req, res) => {
     mealType: req.body.mealType,
     cookTime: req.body.cookTime,
     difficulty: req.body.difficulty,
-    photo: req.file ? req.file.filename : null
+    photo: req.file ? req.file.filename : null,
+    authorId: req.session.user.id,
+    authorUsername: req.session.user.username
   };
 
   store.recipes.push(recipe);
@@ -174,10 +179,17 @@ router.post("/edit/:id", upload.single("photo"), (req, res) => {
   res.redirect("/");
 });
 
-// DELETE RECIPE
+// DELETE RECIPE — only the author can delete
 router.post("/delete/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  store.recipes = store.recipes.filter(recipe => recipe.id !== id);
+  const recipe = store.recipes.find((r) => r.id === id);
+
+  if (!recipe) return res.send("Recipe not found");
+  if (!req.session.user || recipe.authorId !== req.session.user.id) {
+    return res.status(403).send("Only the author can delete this recipe.");
+  }
+
+  store.recipes = store.recipes.filter((r) => r.id !== id);
   res.redirect("/");
 });
 

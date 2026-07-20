@@ -66,9 +66,11 @@
     <button class="edit-btn">Edit</button>
   </form>
 
-  <form action="/delete/<%= recipe.id %>" method="POST">
-    <button class="delete-btn">Delete</button>
-  </form>
+  <% if (user && recipe.authorId === user.id) { %>
+    <form action="/delete/<%= recipe.id %>" method="POST">
+      <button class="delete-btn">Delete</button>
+    </form>
+  <% } %>
 </section>
 
   <% }) %>
